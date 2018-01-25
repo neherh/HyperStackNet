@@ -73,7 +73,7 @@ function heatmapAccuracy(output, label, thr, idxs)
         end
         acc[1] = avgAcc / (#idxs - badIdxCount)
     end
-    return unpack(acc)
+    return acc
 end
 
 function basicAccuracy(output, label, thr)

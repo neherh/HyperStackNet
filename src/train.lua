@@ -7,6 +7,8 @@ if opt.saveHeatmaps then saved.heatmaps = torch.Tensor(validSamples, unpack(ref.
 
 -- Main processing step
 function step(tag)
+    --require('mobdebug').start()
+    print("hello")
     local avgLoss, avgAcc = 0.0, 0.0
     local output, err, idx
     local param, gradparam = model:getParameters()
@@ -42,7 +44,22 @@ function step(tag)
         end
 
         -- Do a forward pass and calculate loss
+        -- print("INPUT!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        -- print(input:size())
+        -- model:remove()
         local output = model:forward(input)
+        --print("here you go")
+        print(output)
+
+        if output ~= label then
+            -- model:remove()
+            -- print("output!")
+            -- print(output)
+            -- print(type(output))
+            -- print("label")
+            -- print(label)
+        end
+        
         local err = criterion:forward(output, label)
         avgLoss = avgLoss + err / nIters
 

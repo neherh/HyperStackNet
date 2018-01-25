@@ -13,7 +13,7 @@ ref.log = {}
 ref.log.train = Logger(paths.concat(opt.save, 'train.log'), opt.continue)
 ref.log.valid = Logger(paths.concat(opt.save, 'valid.log'), opt.continue)
 
--- Main training loop
+--Main training loop
 for i=1,opt.nEpochs do
     print("==> Starting epoch: " .. epoch .. "/" .. (opt.nEpochs + opt.epochNumber - 1))
     if opt.trainIters > 0 then train() end
@@ -26,7 +26,7 @@ end
 opt.lastEpoch = epoch - 1
 
 -- Save model
-model:clearState()
+--model:clearState()
 torch.save(paths.concat(opt.save,'options.t7'), opt)
 torch.save(paths.concat(opt.save,'optimState.t7'), optimState)
 torch.save(paths.concat(opt.save,'final_model.t7'), model)

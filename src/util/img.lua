@@ -91,6 +91,8 @@ function crop(img, center, scale, rot, res)
     -- Modify crop approach depending on whether we zoom in/out
     -- This is for efficiency in extreme scaling cases
     local scaleFactor = (200 * scale) / res
+    -- print("scale factor")
+    -- print(scaleFactor)
     if scaleFactor < 2 then scaleFactor = 1
     else
         local newSize = math.floor(math.max(ht,wd) / scaleFactor)

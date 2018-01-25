@@ -60,28 +60,54 @@ function DataLoader:run()
     local threads = self.threads
     local size = self.iters * self.batchsize
 
+    -- print("NSAMPLES")
+    -- print(self.nsamples)
     local idxs = torch.range(1,self.nsamples)
+    -- print(idxs)
     for i = 2,math.ceil(size/self.nsamples) do
         idxs = idxs:cat(torch.range(1,self.nsamples))
+        -- print(idxs)
     end
     -- Shuffle indices
     idxs = idxs:index(1,torch.randperm(idxs:size(1)):long()) 
+    -- print(idxs)
+
     -- Map indices to training/validation/test split
     idxs = opt.idxRef[self.split]:index(1,idxs:long())
+    -- print(idxs)
 
     local n, idx, sample = 0, 1, nil
     local function enqueue()
         while idx <= size and threads:acceptsjob() do
+            -- print("self.batchsize")
+            -- print(self.batchsize)
+            -- print("size")
+            -- print(size)
+            -- print("idx")
+            -- print(idx)
+            -- print("size - idx + 1")
+            -- print(size - idx + 1)
+            -- print("math.min")
+            -- print(math.min(self.batchsize, size - idx + 1))
+            -- print("idxs:narrow")
+            -- print(idxs:narrow(1, idx, math.min(self.batchsize, size - idx + 1)))
+
             local indices = idxs:narrow(1, idx, math.min(self.batchsize, size - idx + 1))
             threads:addjob(
                 function(indices)
+                    -- print("indices")
+                    -- print(indices)
                     local inp,out = _G.loadData(_G.split, indices)
                     collectgarbage()
                     return {inp,out,indices}
                 end,
                 function(_sample_) sample = _sample_ end, indices
             )
+            -- print("IDX____________")
+            -- print(idx)
             idx = idx + self.batchsize
+            -- print("IDX____________")
+            -- print(idx)
         end
     end
 

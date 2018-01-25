@@ -12,8 +12,12 @@ local function rnd(x) return math.max(-2*x,math.min(2*x,torch.randn(1)[1]*x)) en
 
 -- Code to generate training samples from raw images
 function generateSample(set, idx)
+    -- print("GENERATE SAMPLE IDX")
+    -- print(idx)
     local img = dataset:loadImage(idx)
     local pts, c, s = dataset:getPartInfo(idx)
+    -- print("scale")
+    -- print(s)
     local r = 0
 
     if set == 'train' then
@@ -47,6 +51,10 @@ end
 
 -- Load in a mini-batch of data
 function loadData(set, idxs)
+    -- print("LOAD DATA")
+    -- print(idxs)
+    -- print("nsamples")
+    -- print(idxs:size(1))
     if type(idxs) == 'table' then idxs = torch.Tensor(idxs) end
     local nsamples = idxs:size(1)
     local input,label
