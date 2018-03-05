@@ -1,4 +1,6 @@
---get pckh values 
+--1. get pckh values 
+--2. comment line 77 and uncomment line 76 of eval.lua when running this to get joint -wise accuracy
+--3. revert point 2 above when running model 
 
 require 'paths'
 require 'hdf5'

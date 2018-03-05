@@ -17,7 +17,7 @@ function Dataset:__init()
     local annot = {}
     local tags = {'index','person','imgname','part','center','scale',
                   'normalize','torsoangle','visible','multi','istrain'}
-    local a = hdf5.open(paths.concat(projectDir,'data/harpe/annot.h5'),'r')
+    local a = hdf5.open(paths.concat(projectDir,'data/harpe/annot_corrected.h5'),'r')
     for _,tag in ipairs(tags) do annot[tag] = a:read(tag):all() end
     a:close()
     annot.index:add(1)
@@ -123,8 +123,8 @@ function Dataset:getPartInfo(idx)
     local c = self.annot.center[idx]:clone()
     local s = self.annot.scale[idx]
     -- Small adjustment so cropping is less likely to take feet out
-    c[2] = c[2] + 15 * s
-    s = s * 1.25
+    --c[2] = c[2] + 15 * s
+    s = s * 1.8
     return pts, c, s
 end
 

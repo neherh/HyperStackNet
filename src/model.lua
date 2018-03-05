@@ -17,7 +17,7 @@ elseif opt.loadModel ~= 'none' then
     modelTrained = torch.load(opt.loadModel)
     -- params, gradParams = modelTrained:getParameters()
 
-      params, gradParams = modelTrained:getParameters()
+      --params, gradParams = modelTrained:getParameters()
 
       -- modelTrained.weight(5)
 

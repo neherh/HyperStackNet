@@ -73,7 +73,8 @@ function heatmapAccuracy(output, label, thr, idxs)
         end
         acc[1] = avgAcc / (#idxs - badIdxCount)
     end
-    return acc
+    --jointWiseAcc(acc)
+    return unpack(acc)
 end
 
 function basicAccuracy(output, label, thr)
@@ -120,4 +121,45 @@ function displayPCK(dists, part_idx, label, title, show_key)
     gnuplot.raw('set xrange [0:.5]')
     gnuplot.raw('set yrange [0:1]')
     gnuplot.plot(unpack(plot_args))
+end
+
+function jointWiseAcc(acc)
+    local ankle = (acc[2] + acc[7])/2.0
+    local knee = (acc[3] + acc[6])/2.0
+    local hip = (acc[4] + acc[5])/2.0
+    local pelvis = acc[8]
+    local neck = acc[10]
+    local thorax = acc[9]
+    local head = acc[11]
+    local wrist = (acc[12] + acc[17])/2.0
+    local elbow = (acc[13] + acc[16])/2.0
+    local shoulder = (acc[14] + acc[15])/2.0
+    local stickup = acc[18]
+    local stickdown = acc[19]
+    print("ankle:")
+    print(ankle)
+    print("knee:")
+    print(knee)
+    print("hip:")
+    print(hip)
+    print("pelvis:")
+    print(pelvis)
+    print("neck")
+    print(neck)
+    print("thorax")
+    print(thorax)
+    print("head")
+    print(head)
+    print("wrist")
+    print(wrist)
+    print("elbow")
+    print(elbow)
+    print("shoulder")
+    print(shoulder)
+    print("stickup")
+    print(stickup)
+    print("stickown")
+    print(stickdown)
+    print("average:")
+    print(acc[1])
 end

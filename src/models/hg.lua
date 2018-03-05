@@ -37,19 +37,11 @@ end
 function createModel(inp)
    
      print('==> In create model ')
-
-     print("In cREATE MODEL")
      inp = inp()
-     model1 = nn.CAddTable()(inp)
-     print(model1)
-
-    -- local cnv1_ = nnlib.SpatialConvolution(3,64,7,7,2,2,3,3)(inp)           -- 128
-    -- local cnv1 = nnlib.ReLU(true)(nn.SpatialBatchNormalization(64)(cnv1_))
-    --  local r1 = Residual(64,128)(cnv1)
-    --  local pool = nnlib.SpatialMaxPooling(2,2,2,2)(r1)                       -- 64
-    --  local r4 = Residual(128,128)(pool)
-    -- local r5 = Residual(16,opt.nFeats)(inp)
-     local mapping = nnlib.SpatialConvolution(16,256,1,1,1,1,0,0)(model1)
+     -- summing heatmaps from pre-trained model
+     summed_heatmaps = nn.CAddTable()(inp)
+     --print(summed_heatmaps)
+     local mapping = nnlib.SpatialConvolution(16,256,1,1,1,1,0,0)(summed_heatmaps)
      local out = {}
      local inter = mapping
 

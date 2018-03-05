@@ -330,3 +330,46 @@ function flip(x)
     end
     return y:typeAs(x)
 end
+
+function compileImages(imgs, nrows, ncols, res)
+    -- Assumes the input images are all square/the same resolution
+    local totalImg = torch.zeros(3,nrows*res,ncols*res)
+    for i = 1,#imgs do
+        local r = torch.floor((i-1)/ncols) + 1
+        local c = ((i - 1) % ncols) + 1
+        totalImg:sub(1,3,(r-1)*res+1,r*res,(c-1)*res+1,c*res):copy(imgs[i])
+    end
+    return totalImg
+end
+
+function compileImages18(imgs, nrows, ncols, res)
+    -- Assumes the input images are all square/the same resolution
+    local totalImg = torch.zeros(3,nrows*res,ncols*res)
+    --print("there")
+    --print(#imgs)
+    for i = 1,#imgs do
+        local r = torch.ceil((i)/ncols)
+        if i%ncols == 0 then 
+             c = 4 
+        else 
+             c = ((i) % ncols) 
+        end
+        --print(r)
+        --print(c)
+        totalImg:sub(1,3,(r-1)*res+1,r*res,(c-1)*res+1,c*res):copy(imgs[i])
+    end
+    return totalImg
+end
+
+function colorHM(x)
+    -- Converts a one-channel grayscale image to a color heatmap image
+    local function gauss(x,a,b,c)
+        return torch.exp(-torch.pow(torch.add(x,-b),2):div(2*c*c)):mul(a)
+    end
+    local cl = torch.zeros(3,x:size(1),x:size(2))
+    cl[1] = gauss(x,.5,.6,.2) + gauss(x,1,.8,.3)
+    cl[2] = gauss(x,1,.5,.3)
+    cl[3] = gauss(x,1,.2,.3)
+    cl[cl:gt(1)] = 1
+    return cl
+end
