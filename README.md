@@ -3,7 +3,7 @@
 This is the training pipeline used for:
 
 
-H. Neher, K. Vat, A. Wong, D. A. Clausi,
+H. Neher, K. Vats, A. Wong, D. A. Clausi,
 **HyperStackNet: A Hyper Stacked Hourglass Deep Convolutional Neural Network Architecture for Joint Player and Stick Pose Estimation in Hockey**, CRV, 2018.
 
 To run this code, make sure the following are installed:
